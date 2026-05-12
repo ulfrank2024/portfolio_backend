@@ -43,3 +43,9 @@ create table if not exists project_specs (
 alter table chat_sessions  disable row level security;
 alter table chat_messages  disable row level security;
 alter table project_specs  disable row level security;
+
+-- Migration: user identification
+ALTER TABLE chat_sessions
+  ADD COLUMN IF NOT EXISTS verified boolean DEFAULT false,
+  ADD COLUMN IF NOT EXISTS verification_code text,
+  ADD COLUMN IF NOT EXISTS code_expires_at timestamptz;
